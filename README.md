@@ -1,73 +1,218 @@
-# React + TypeScript + Vite
+# 🚨 Resq Now — Smart Emergency & Accident Reporting System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Report road accidents. Share location. Help emergency responders act faster.**
 
-Currently, two official plugins are available:
+Resq Now is a web-based emergency reporting platform designed to improve coordination during road accidents. It allows witnesses or bystanders to report accidents by uploading photographic evidence, sharing their current location and providing an optional description.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The submitted information is stored in a centralized database, helping emergency response teams access accident reports and coordinate their response.
 
-## React Compiler
+## 🌐 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Application:** https://resq-now-573d.vercel.app/
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🚑 Public Accident Reporting
+- Report road accidents without requiring an account.
+- Capture accident photographs using a device camera.
+- Upload existing images as evidence.
+- Automatically capture the current geographical location using browser geolocation.
+- Add an optional accident description.
+- Submit accident reports to the backend.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🔐 Official Authentication
+- Dedicated login interface for emergency personnel.
+- Supabase Authentication integration.
+- Existing official accounts for ambulance and police personnel.
+- Role-based access control (under development).
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 📊 Emergency Management
+- Centralized storage of accident reports.
+- Official dashboard interface.
+- Accident status management.
+- Ambulance and police response coordination (under development).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| React 19 | Frontend library |
+| TypeScript | Type safety |
+| Vite | Development server and build tool |
+| Tailwind CSS | Styling |
+| Supabase | Backend and database |
+| Supabase Auth | Official authentication |
+| Supabase Storage | Accident image storage |
+| Vercel | Deployment |
+
+## 🏗️ System Overview
+
+```text
+          Witness / Bystander
+                  |
+                  v
+          Resq Now Web App
+                  |
+          +-------+-------+
+          |       |       |
+          v       v       v
+        Photo   Location Description
+          |       |       |
+          +-------+-------+
+                  |
+                  v
+             Supabase
+          +-------+-------+
+          |       |       |
+          v       v       v
+        Storage Database Auth
+          |       |       |
+          +-------+-------+
+                  |
+                  v
+          Emergency Officials
+          (Ambulance / Police)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Follow these instructions to run the project locally.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+
+- Node.js (LTS version recommended)
+- npm
+- Git
+- A Supabase project
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/nabeelbs098/Resq_Now.git
 ```
+
+### 2. Navigate to the Project
+
+```bash
+cd Resq_Now
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+If npm reports a peer dependency conflict with React Day Picker, use:
+
+```bash
+npm install --legacy-peer-deps
+```
+
+### 4. Configure Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+```
+
+Replace the placeholder values with your Supabase project credentials.
+
+**Security:** Never expose your Supabase service-role key in frontend code or commit private credentials to GitHub.
+
+### 5. Start the Development Server
+
+```bash
+npm run dev
+```
+
+Open the local URL displayed in your terminal, usually:
+
+```text
+http://localhost:5173
+```
+
+### 6. Build for Production
+
+```bash
+npm run build
+```
+
+## 🗄️ Database
+
+Resq Now uses Supabase as its backend.
+
+The current database includes:
+
+### Officials Table
+
+Stores emergency personnel information.
+
+| Column | Description |
+|---|---|
+| `id` | Official UUID |
+| `name` | Official name |
+| `role` | Official role, such as ambulance or police |
+| `email` | Official email address |
+
+### Reports Table
+
+Stores submitted accident reports.
+
+The application uses Supabase to persist accident information and associated evidence.
+
+## 📁 Project Structure
+
+```text
+Resq_Now/
+│
+├── public/
+├── src/
+│   ├── components/
+│   │   └── ui/
+│   ├── hooks/
+│   ├── integrations/
+│   │   └── supabase/
+│   ├── lib/
+│   ├── pages/
+│   │   ├── Dashboard.tsx
+│   │   ├── Index.tsx
+│   │   ├── Login.tsx
+│   │   └── NotFound.tsx
+│   ├── App.tsx
+│   └── main.tsx
+│
+├── .env
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
+
+## 🚀 Future Improvements
+
+- Complete role-based dashboards for emergency personnel.
+- Real-time ambulance location tracking.
+- Automatic assignment of nearby emergency responders.
+- Live emergency notifications.
+- Hospital coordination and response management.
+- Improved emergency analytics and reporting.
+
+## 🎯 Project Objective
+
+The main objective of Resq Now is to reduce delays in accident reporting and improve communication between witnesses and emergency response teams.
+
+By combining location services, image uploads and centralized data management, the platform aims to make emergency coordination faster and more accessible.
+
+## 👨‍💻 Developer
+
+**Nabeel B S**
+
+B.Tech Computer Science and Engineering Student
+
+- GitHub: https://github.com/nabeelbs098
+
+---
+
+**Resq Now — Every Second Matters.** 🚨
